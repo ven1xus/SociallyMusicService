@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct SociallyArtist: Codable {
+public struct SociallyArtist: Codable, Hashable {
     
     public let name: String
     public let id: String

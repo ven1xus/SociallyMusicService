@@ -393,16 +393,16 @@ public class AppleMusicService: MusicService {
                     result(.failure(.noData))
                     return
                 }
-                var ret = [SociallyArtist]()
+                var ret = Set<SociallyArtist>()
                 for song in res.results.songs[0].data {
                     guard let attributes = song.attributes else { continue }
                     var imageURL = attributes.artwork.url
                     imageURL = imageURL.replacingOccurrences(of: "{w}x{h}bb", with: "640x640bb")
                     let sociallyArtist = SociallyArtist(name: attributes.artistName , id: attributes.playParams.id, imageURL: imageURL)
-                    ret.append(sociallyArtist)
+                    ret.insert(sociallyArtist)
                 }
                 ret = ret.filter({!$0.name.contains("&")})
-                result(.success(ret))
+                result(.success(Array(ret)))
             case .failure(let err):
                 result(.failure(err))
             }
